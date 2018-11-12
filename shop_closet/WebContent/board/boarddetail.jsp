@@ -102,7 +102,7 @@
 		</tr>
 	</table>
 	<c:if test="${sessionScope.loginUser.id == boardview.writer}">
-		<span><a href="#">게시글 수정</a></span>
+		<span><a href="boardUpdate.bizpoll">게시글 수정</a></span>
 		<span><a href="#">게시글 삭제</a></span>
 	</c:if>
 </div>
