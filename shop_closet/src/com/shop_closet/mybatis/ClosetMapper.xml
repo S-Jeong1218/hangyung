@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com/shop_closet/mybatis/ClosetMapper.xml">
+<!-- 여기에 sql문을 씁니다. -->
+
+	<!-- product DAO -->
+	<select id="bestView" resultType="com.shop_closet.dto.ProductDTO">
+		<![CDATA[
+			SELECT * FROM (SELECT * FROM closetproduct
+            	   ORDER BY p_purchasecnt DESC)
+			WHERE rownum<=6
+		]]>
+	</select>
+  	
+  	<!-- ======================================================================== -->
+  	
+  	<!-- Member DAO -->
+  	<insert id="insertMember" parameterType="com.shop_closet.dto.MemberDTO">
+  		INSERT INTO membercloset(id,pw,name,phone,email,zipcode,addr1,addr2)
+		VALUES(#{id},#{pw},#{name},#{phone},#{email},#{zipcode},#{addr1},#{addr2})
+  	</insert>
+
+	<select id="comfirmID" parameterType="String" resultType="String">
+		SELECT id FROM membercloset
+		WHERE id=#{userid}
+	</select>
+	
+	<select id="confirmPW" parameterType="com.shop_closet.dto.MemberDTO" resultType="String">
+		SELECT id FROM membercloset 
+		WHERE id=#{userid} AND pw=#{userpw}
+	</select>
+	
+	<select id="LoginCheck" parameterType="com.shop_closet.dto.MemberDTO" resultType="com.shop_closet.dto.MemberDTO">
+		SELECT * FROM membercloset
+		WHERE id=#{id} AND pw=#{pw}
+	</select>
+	
+	<update id="updateMember" parameterType="com.shop_closet.dto.MemberDTO">
+		UPDATE membercloset SET 
+		pw=#{pw}, name=#{name}, phone=#{phone}, email=#{email}, zipcode=#{zipcode}, addr1=#{addr1}, addr2=#{addr2} 
+		WHERE id=#{id}
+	</update>
+	
+	<update id="updatePW">
+		UPDATE membercloset SET 
+		pw = #{userpw} 
+		WHERE id = #{userid}
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		DELETE FROM membercloset
+		WHERE id=#{userid}
+	</delete>
+	
+	<!-- =================================================================== -->
+	<!-- BoardDAO -->
+	<!-- <select id="" resultType="com.shop_closet.dto.BoardDTO">
+		<![CDATA[
+			SELECT * FROM ( SELECT rownum rnum,
+                a.*
+                FROM ( SELECT *
+                        FROM closetboard
+                        WHERE bno>0
+                        ORDER BY bno DESC
+                        ) a
+                )
+			WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
+		]]>
+	</select> -->
+	
+	<select	id="countPaging" resultType="int">
+		<![CDATA[
+			SELECT count(bno)
+			FROM closetboard
+			WHERE bno > 0
+		]]>
+        <if test='flag=="1"'>
+        <![CDATA[title LIKE '%'||#{keyword}||'%']]>
+        </if>
+                        
+        <if test='flag=="2"'>
+        <![CDATA[content LIKE '%'||#{keyword}||'%']]>
+        </if>
+                        
+        <if test='flag=="3"'>
+        <![CDATA[title LIKE '%'||#{keyword}||'%' OR content LIKE '%'||#{keyword}||'%']]>
+        </if>
+                        
+        <if test='flag=="4"'>
+        <![CDATA[writer LIKE '%'||#{keyword}||'%']]>
+        </if>
+	</select>
+	
+	<select id="boardList" resultType="com.shop_closet.dto.BoardDTO">
+		<![CDATA[
+			SELECT * FROM (SELECT rownum rnum,
+                a.*
+                FROM ( SELECT *
+                        FROM closetboard
+                        WHERE bno>0  
+         ]]>
+                        
+                        <if test='flag=="1"'>
+                        <![CDATA[AND title LIKE '%'||#{keyword}||'%']]>
+                        </if>
+                        
+                        <if test='flag=="2"'>
+                        <![CDATA[AND content LIKE '%'||#{keyword}||'%']]>
+                        </if>
+                        
+                        <if test='flag=="3"'>
+                        <![CDATA[AND title LIKE '%'||#{keyword}||'%' OR content LIKE '%'||#{keyword}||'%']]>
+                        </if>
+                        
+                        <if test='flag=="4"'>
+                        <![CDATA[AND writer LIKE '%'||#{keyword}||'%']]>
+                        </if>
+                        
+         <![CDATA[
+                        ORDER BY bno DESC
+                        ) a
+                )
+       		WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
+		]]>
+	</select>
+	
+	<select id="boardDetailView" resultType="com.shop_closet.dto.BoardDTO">
+		SELECT * FROM closetboard
+		WHERE bno = #{bno}
+	</select>
+	
+	<update id="viewCnt">
+		UPDATE closetboard
+				SET viewcnt = viewcnt +1
+				WHERE bno = #{bno}
+	</update>
+	
+	<insert id="boardInsert" parameterType="com.shop_closet.dto.BoardDTO">
+		<choose>
+			<when test="content != null">
+				INSERT INTO closetboard(bno, title, content, writer, filename, filesize)
+				VALUES(seq_closetboard.NEXTVAL, #{title},#{content},#{writer}, #{filename},#{filesize})
+			</when>
+			<otherwise>
+				INSERT INTO closetboard(bno, title, writer, filename, filesize)
+				VALUES(seq_closetboard.NEXTVAL, #{title}, #{writer}, #{filename},#{filesize})
+			</otherwise>
+		</choose>
+	</insert>
+</mapper>
