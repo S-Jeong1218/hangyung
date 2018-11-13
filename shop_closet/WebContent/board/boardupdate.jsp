@@ -47,6 +47,9 @@
 		width:1070px;
 		height:400px;
 	}
+	#uploadfile{
+		display:none;
+	}
 </style>
 <%-- <script type="text/javascript" src="<%=path%>/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script> --%>
 <script type="text/javascript" src="<%=path%>/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script> 
@@ -63,6 +66,21 @@
 			return false;
 		}
 		$("#frm_btn").submit
+	});
+	$(document).on("click",".btn-file", function(){
+		$("#uploadfile").click();
+	});
+	$(document).on("change","#uploadfile", function(){
+		var filename = this.files[0].name;
+		$("#file-name").text(filename);
+		$("#close_btn").css("display","block");
+	});
+	$(document).on("click","#close_btn",function(){
+		alert("클릭됨");
+		$("#uploadfile").replaceWith($("#uploadfile").clone(true)); /*초기화 */
+		$("#uploadfile").val("");
+		$("#file-name").text("선택된 파일 없음");
+		$("#close_btn").css("display","none");
 	});
 </script>
 </head>
@@ -88,7 +106,12 @@
 			</tr>
 			<tr>
 				<th class="th_1">파일등록</th>
-				<th class="th_2"><span><input type="file" name="uploadfile" id="uploadfile" value="파일등록"></span></th>
+				<th class="th_2">
+					<input type="file" name="uploadfile" id="uploadfile" value="파일등록">
+					<input type="button" class="btn btn-file" value="파일 선택">
+					<span class="files" id="file-name" style="height:29px;border:none;">선택된 파일 없음</span>
+					<i class="fa fa-close" id="close_btn" style="display:none"></i>	
+				</th>
 			</tr>
 		</table>
 		<span><input id="board_search_btn" type="submit" value="수정하기"></span>
