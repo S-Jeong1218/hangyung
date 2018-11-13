@@ -40,11 +40,14 @@ public class BoardUpdatePlayAction implements Action{
 		String writer = multi.getParameter("writer");
 		String filename = " ";//공백
 		int filesize=0;
+		String postfile = multi.getParameter("post-file-name");
 		
 		System.out.println("===========게시글등록=========");
-		System.out.println("제목:" + title);
-		System.out.println("내용:" + content);
-		System.out.println("작성자:"+writer);
+		System.out.println("번호 : " +bno);
+		System.out.println("제목 :" + title);
+		System.out.println("내용 :" + content);
+		System.out.println("작성자 :"+writer);
+		System.out.println("이전파일 : "+ postfile);
 		
 		try {
 			Enumeration files = multi.getFileNames();

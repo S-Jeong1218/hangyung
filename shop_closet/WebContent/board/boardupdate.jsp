@@ -67,17 +67,23 @@
 		}
 		$("#frm_btn").submit
 	});
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		var file = $("#uploadfile").files[0].name;
 		$("#file-name").text(file);
-	});
+	}); */
 	$(document).on("click",".btn-file", function(){
 		$("#uploadfile").click();
 	});
 	$(document).on("change","#uploadfile", function(){
-		var filename = this.files[0].name;
-		$("#file-name").text(filename);
-		$("#close_btn").css("display","block");
+		var filesize = $(this)[0].files;
+		if(filesize.length<1){
+			$("#file-name").text("선택된 파일 없음");
+			$("#close_btn").css("display","none");
+		}else{
+			var filename = this.files[0].name;
+			$("#file-name").text(filename);
+			$("#close_btn").css("display","block");
+		}	
 	});
 	$(document).on("click","#close_btn",function(){
 		alert("클릭됨");
@@ -95,6 +101,7 @@
 	<h2>게시글 수정</h2>
 	<form action="boardUpdatePlay.bizpoll" id="frm_btn" name="frm_btn" method="post" enctype="multipart/form-data">
 		<table id="content_table">
+			<input type="hidden" id="bno" name="bno" value="${boardview.bno}">
 			<tr>
 				<th class="th_1">작성자</th>
 				<th class="th_2"><input type="text" value="${sessionScope.loginUser.id}" readonly="readonly" name="writer"></th>
@@ -115,6 +122,7 @@
 					<input type="button" class="btn btn-file" value="파일 선택">
 					<span class="files" id="file-name" style="height:29px;border:none;">${boardview.filename}</span>
 					<i class="fa fa-close" id="close_btn" style="display:none"></i>	
+					<input type="hidden" id="post-file-name" name="post-file-name" value="${boardview.filename}">
 				</th>
 			</tr>
 		</table>
