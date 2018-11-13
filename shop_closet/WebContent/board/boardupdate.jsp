@@ -67,6 +67,10 @@
 		}
 		$("#frm_btn").submit
 	});
+	$(document).ready(function(){
+		var file = $("#uploadfile").files[0].name;
+		$("#file-name").text(file);
+	});
 	$(document).on("click",".btn-file", function(){
 		$("#uploadfile").click();
 	});
@@ -88,7 +92,7 @@
 
 <!-- 게시글 -->
 <div id="write_content_wrap">
-	<h2>게시글 작성</h2>
+	<h2>게시글 수정</h2>
 	<form action="boardUpdatePlay.bizpoll" id="frm_btn" name="frm_btn" method="post" enctype="multipart/form-data">
 		<table id="content_table">
 			<tr>
@@ -109,7 +113,7 @@
 				<th class="th_2">
 					<input type="file" name="uploadfile" id="uploadfile" value="파일등록">
 					<input type="button" class="btn btn-file" value="파일 선택">
-					<span class="files" id="file-name" style="height:29px;border:none;">선택된 파일 없음</span>
+					<span class="files" id="file-name" style="height:29px;border:none;">${boardview.filename}</span>
 					<i class="fa fa-close" id="close_btn" style="display:none"></i>	
 				</th>
 			</tr>

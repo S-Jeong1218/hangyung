@@ -16,6 +16,7 @@ import com.shop_closet.action.BoardInsertPlayAction;
 import com.shop_closet.action.BoardListAction;
 import com.shop_closet.action.BoardSearchAction;
 import com.shop_closet.action.BoardUpdateAction;
+import com.shop_closet.action.BoardUpdatePlayAction;
 import com.shop_closet.action.BoardViewcntAction;
 import com.shop_closet.action.BoardWriteAction;
 import com.shop_closet.action.ConstractAction;
@@ -135,6 +136,9 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		}else if(command.equals("/boardUpdate.bizpoll")) {
 			action = new BoardUpdateAction();
+			forward = action.excute(request, response);
+		}else if(command.equals("/boardUpdatePlay.bizpoll")) {
+			action = new BoardUpdatePlayAction();
 			forward = action.excute(request, response);
 		}
 
