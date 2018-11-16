@@ -22,7 +22,7 @@ public class MemberDAO {
 	SqlSession sqlSession;
 		
 	//싱글톤으로 new없이 사용하기 때문에 다른 곳에서 객체생성 못하게 private로 막음
-	private MemberDAO() {}
+	public MemberDAO() {}
 		
 	//싱글톤 패턴 -객체생성 1회 실시 후 공유해서 사용
 	//객체생성 1회 실시
