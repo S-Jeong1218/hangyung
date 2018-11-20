@@ -15,6 +15,15 @@ public class loginCheckTest {
 		
 		MemberDAO mDao = MemberDAO.getInstance();
 		mDao.LoginCheck(id, pw);
+		/*String result1 = mDao.confirmPW(id, pw);
+		int result = Integer.parseInt(result1);*/
+		if(mDao.LoginCheck(id, pw) != null) {
+			System.out.println("로그인성공");
+		}else {
+			System.out.println("로그인 실패");
+		}
+		
+		
 	}
 
 }
