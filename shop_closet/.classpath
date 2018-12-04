@@ -10,5 +10,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="lib" path="C:/Users/501-8/Documents/R/win-library/3.5/Rserve/java/REngine.jar"/>
+	<classpathentry kind="lib" path="C:/Users/501-8/Documents/R/win-library/3.5/Rserve/java/Rserve.jar"/>
+	<classpathentry kind="lib" path="C:/Users/501-8/Desktop/프로젝트/rjsp jar파일/JRI.jar"/>
+	<classpathentry kind="lib" path="C:/Users/501-8/Desktop/프로젝트/rjsp jar파일/JRIEngine.jar"/>
+	<classpathentry kind="lib" path="C:/Users/501-8/Desktop/프로젝트/rjsp jar파일/REngine.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
